@@ -1,0 +1,23 @@
+{
+  "name": "tailwindify",
+  "version": "1.0.0",
+  "description": "Converts HTML CSS to tailwind compatible html css",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx jest test"
+  },
+  "keywords": [
+    "convert to tailwind",
+    "tailwind"
+  ],
+  "author": "Abhishek Jakhotiya <jakhotiyaabhishek@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "htmlparser2": "^9.0.0",
+    "postcss": "^8.4.24",
+    "tailwindcss": "^3.3.2"
+  },
+  "devDependencies": {
+    "jest": "^29.5.0"
+  }
+}
