@@ -1,0 +1,7 @@
+/* considering `red` color is primary here */
+.parent .child1 .child2 {
+  display: block;
+}
+.parent .child1 .child2 {
+  padding: 16px;
+}

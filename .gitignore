@@ -1,3 +1,6 @@
 node_modules
 .idea
 data/tailwind.json
+input.css
+output.css
+package-lock.json

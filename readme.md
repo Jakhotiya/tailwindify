@@ -3,6 +3,7 @@
 Library converts HTML CSS into tailwind based UI
 
 ## How to set this up ?
+
 ```bash
 git@github.com:Jakhotiya/tailwindify.git
 cd tailwindify;
@@ -16,6 +17,7 @@ This file is used to lookup utility class for a given css rule
 
 Once you have a tailwind file ready with filename `output.css`
 run following to generate one time tailwinddb using following command
+
 ```bash
 node generate-reverse-class-index.js
 ```
@@ -34,3 +36,12 @@ Once this is done. Go ahead and run tests
 4. Traverse DOM and read classes from each node
 5. For each class found lookup css rules defined in CSSOM that we built
 6. For each rule lookup tailwinddb that we have built and generate list of classlist that we need
+
+## Tests cover as follow
+
+1. simple
+2. multiline
+3. sibling
+4. child-level1
+5. child-level2
+6. child-level3 // contains multiline + sibling selector

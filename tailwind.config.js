@@ -1,10 +1,8 @@
 module.exports = {
-    content: [],
-    safelist:[
-        {pattern : /.+/}
-    ],
-    theme: {
-        extend: {},
-    },
-    plugins: [],
-}
+  content: [],
+  safelist: [{ pattern: /.+/ }],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+};

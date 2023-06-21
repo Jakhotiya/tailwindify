@@ -1,0 +1,4 @@
+/* considering primary color is `red` */
+.myclass:hover {
+  color: red;
+}

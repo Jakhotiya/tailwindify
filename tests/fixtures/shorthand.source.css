@@ -1,0 +1,7 @@
+/* considering `red` color is primary */
+.heading {
+  border: 1px solid red;
+}
+.myclass {
+  padding: 8px 16px;
+}

@@ -1,0 +1,3 @@
+.my-input:checked + span {
+  display: block;
+}

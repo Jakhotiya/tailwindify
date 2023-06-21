@@ -1,0 +1,6 @@
+.parent .child {
+  display: block;
+}
+.parent .child {
+  padding: 16px;
+}

@@ -1,0 +1,4 @@
+/* considering `red` color is primary */
+.myclass.sibling {
+  padding: 16px;
+}
