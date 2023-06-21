@@ -1,0 +1,20 @@
+.hide {
+    display:none;
+}
+
+.container > div {
+    padding:8px;
+}
+
+.container .primary {
+    background-color:red;
+}
+
+.container .secondary {
+    background-color:blue;
+}
+
+.container p {
+    display:inline-block;
+    padding: 0.25rem
+}
