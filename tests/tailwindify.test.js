@@ -1,6 +1,6 @@
 const tailwindify = require('../tailwindify');
 const fs = require('fs');
-const {parseColor,formatColor} = require('tailwindcss/lib/util/color');
+const prettify = require('html-prettify');
 function readSourceToTargetConversion(filename){
     let source = fs.readFileSync('./tests/fixtures/'+filename+'.source.html',{encoding:'utf-8'});
     let css = fs.readFileSync('./tests/fixtures/'+filename+'.source.css',{encoding:'utf-8'});
@@ -9,13 +9,10 @@ function readSourceToTargetConversion(filename){
 
 }
 test('simple html files',()=>{
-    const {source,css,target} = readSourceToTargetConversion('inline-html')
-
-    expect(tailwindify(source,css)).toBe(target);
+    let {source,css,target} = readSourceToTargetConversion('inline-html')
+    let result = tailwindify(source,css);
+    result = prettify(result);
+    target = prettify(target);
+    expect(result).toBe(target);
 })
 
-test('tailwind color conversion works',()=>{
-    // let rgba = parseColor('red');
-    // rgba.alpha = 1;
-    // expect(formatColor(rgba)).toEqual('red');
-})

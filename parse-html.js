@@ -2,7 +2,7 @@ const htmlparser2 = require("htmlparser2");
 const domUtils = require("domutils");
 const postcss = require("postcss");
 const render = require("dom-serializer").default;
-const convert = require('./src/convert-to-tailwind')
+const convert = require('./src/get-tailwind-classes-for-rule')
 
 // Your HTML string
 const html = `

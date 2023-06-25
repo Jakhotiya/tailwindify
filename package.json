@@ -2,7 +2,7 @@
   "name": "tailwindify",
   "version": "1.0.0",
   "description": "Converts HTML CSS to tailwind compatible html css",
-  "main": "index.js",
+  "main": "tailwindify.js",
   "scripts": {
     "test": "npx jest test"
   },
@@ -19,6 +19,7 @@
     "tailwindcss": "^3.3.2"
   },
   "devDependencies": {
-    "jest": "^29.5.0"
+    "jest": "^29.5.0",
+    "html-prettify": "^1.0.7"
   }
 }

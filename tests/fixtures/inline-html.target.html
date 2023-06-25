@@ -2,27 +2,43 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Tests</title>
+
+    <style>
+        .color-red-test {
+            color: red;
+        }
+
+        #multi-properties-test {
+            margin: 0;
+            padding: 4px;
+        }
+    </style>
 </head>
 <body>
-<div class="hide hidden">
-    <p>Hello, world!</p>
-</div>
 <div class="container">
-    <div class="primary bg-primary">
-        <h1>
-            First Heading
-        </h1>
-        <p class="p-1 inline-block">This is para</p>
-    </div>
-    <div class="secondary bg-secondary"></div>
-    <div class="primary bg-primary">
-        <h1>
-            Second Heading
-        </h1>
-        <p class="p-1 inline-block">This is para</p>
-    </div>
-    <div class="secondary bg-secondary"></div>
+    <h1>Tailwindify Tests</h1>
+    <hr>
+    <section>
+        <h2>Convert inline-block css declaration to tailwind class <i>inline-block</i></h2>
+        <div class="inline-block-test">
+            <div class="inline-block"> Inline block </div>
+            <div class="inline-block"> Inline block </div>
+            <div class="inline-block"> Inline block </div>
+        </div>
+    </section>
+
+    <section>
+        <h2> Unprocessed styles are added to style tag in the head</h2>
+        <div class="color-red-test">
+            This is red text.
+        </div>
+        <div id="multi-properties-test" class="flex">
+
+        </div>
+    </section>
+
 </div>
+
 </body>
 </html>

@@ -1,20 +1,13 @@
-.hide {
-    display:none;
+.inline-block-test div {
+    display: inline-block;
 }
 
-.container > div {
-    padding:8px;
+.color-red-test {
+    color: red;
 }
 
-.container .primary {
-    background-color:red;
-}
-
-.container .secondary {
-    background-color:blue;
-}
-
-.container p {
-    display:inline-block;
-    padding: 0.25rem
+#multi-properties-test {
+    margin: 0;
+    padding: 4px;
+    display: flex;
 }
