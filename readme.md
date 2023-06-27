@@ -50,6 +50,8 @@ Once this is done. Go ahead and run tests
 7. Find the tailwind classes that would replace the declarations for the selector from previous step.
 8. Add these tailwind classes to the html node
 9. We keep the existing classes intact in this first phase. We will later on pass this output to purging program where DOM will be optimized.
+10. CSSOM is a tree. When we process a declaration, we mark it for removal from the tree. At the end we remove all nodes that are marked for removal
+11. We Render CSSOM back to style rules and append these styles in the html head. This way page does not break. Our goal is to reduce such styles
 
 ## When will be manual configuration needed?
 If your source css contains property values that are non-standard from tailwind perspective, we will need to 

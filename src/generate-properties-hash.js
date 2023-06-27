@@ -9,9 +9,9 @@ function generateHash(cssRules={}){
     let props = Object.keys(cssRules);
     props = props.sort();
     for(let prop of props){
-        hash+= prop+':'+cssRules[prop];
+        hash+= ' '+ prop+':'+cssRules[prop];
     }
-    return hash;
+    return hash.trim();
 }
 
 module.exports = generateHash;

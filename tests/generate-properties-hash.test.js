@@ -10,7 +10,7 @@ test('same hash is generated irrespective of order of css declarations',()=>{
         "color":"red",
         "display":"block"
     }
-
+    expect(generateHash(css1)).toEqual('color:red display:block')
     expect(generateHash(css1)).toEqual(generateHash(css2))
 
 })

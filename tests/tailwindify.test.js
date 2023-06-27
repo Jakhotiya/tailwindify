@@ -8,6 +8,55 @@ function readSourceToTargetConversion(filename){
     return {source,css,target}
 
 }
+
+test('test colors are ported over.',()=>{
+    let {source,css,target} = readSourceToTargetConversion('colors')
+    let result = tailwindify(source,css);
+    result = prettify(result);
+    target = prettify(target);
+    expect(result).toBe(target);
+})
+
+test('Height widths are ported over.',()=>{
+    let {source,css,target} = readSourceToTargetConversion('sizing')
+    let result = tailwindify(source,css);
+    result = prettify(result);
+    target = prettify(target);
+    expect(result).toBe(target);
+})
+
+test('test typography is ported over.',()=>{
+    let {source,css,target} = readSourceToTargetConversion('typography')
+    let result = tailwindify(source,css);
+    result = prettify(result);
+    target = prettify(target);
+    expect(result).toBe(target);
+})
+
+test('test margins paddings are ported over.',()=>{
+    let {source,css,target} = readSourceToTargetConversion('margin-paddings')
+    let result = tailwindify(source,css);
+    result = prettify(result);
+    target = prettify(target);
+    expect(result).toBe(target);
+})
+
+test('test flex and grid layouts.',()=>{
+    let {source,css,target} = readSourceToTargetConversion('flex-grid')
+    let result = tailwindify(source,css);
+    result = prettify(result);
+    target = prettify(target);
+    expect(result).toBe(target);
+})
+
+test('test classes should have correct prefixes according to media query.',()=>{
+    let {source,css,target} = readSourceToTargetConversion('media-queries')
+    let result = tailwindify(source,css);
+    result = prettify(result);
+    target = prettify(target);
+    expect(result).toBe(target);
+})
+
 test('simple html files',()=>{
     let {source,css,target} = readSourceToTargetConversion('inline-html')
     let result = tailwindify(source,css);

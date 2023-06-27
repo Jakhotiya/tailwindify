@@ -36,3 +36,14 @@ test('if a css property value does not exist in tailwinddb, convert should retur
     expect(actual.classList).toEqual(['.flex','.shrink-0','.w-full']);
     expect(actual.skipped).toEqual({"color":"red"});
 })
+
+test('get classes for font-sizes',()=>{
+    let style = {
+        "font-size":"1rem",
+        "line-height": "1.5rem"
+    }
+    let actual = getTailwindClassesForRule(style);
+    expect(actual.skipped).toEqual({});
+    expect(actual.classList).toEqual(['.text-base']);
+
+})

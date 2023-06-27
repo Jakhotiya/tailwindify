@@ -18,14 +18,40 @@ function removeAllStyleTags(dom){
 
 }
 
+function getModifierFromMediaQuery(mediaRule){
+    if(mediaRule.params.includes('min-width') && mediaRule.params.includes('480px')){
+        return 'xs';
+    }
+    if(mediaRule.params.includes('min-width') && mediaRule.params.includes('640px')){
+        return 'sm';
+    }
+    if(mediaRule.params.includes('min-width') && mediaRule.params.includes('768px')){
+        return 'md';
+    }
+    if(mediaRule.params.includes('min-width') && mediaRule.params.includes('1024px')){
+        return 'lg';
+    }
+    if(mediaRule.params.includes('min-width') && mediaRule.params.includes('1536px')){
+        return '2xl';
+    }
+}
+
 /**
  * Modifies DOM and returns rules that could not be processed.
  * Function mutates both DOM and rule
  * @param dom
  * @param rule
- * @param media
+ * @param mediaPrefix
  */
-function processRuleForDOM(dom, rule, media) {
+function processRuleForDOM(dom, rule,mediaPrefix) {
+
+    if(rule.type === 'atrule'){
+        for(let innerRule of rule.nodes){
+            let prefix = getModifierFromMediaQuery(rule);
+            processRuleForDOM(dom,innerRule,prefix)
+        }
+        return;
+    }
 
     /**
      * Since CssSelector lib can not process pseudo selectors we will skip
@@ -53,26 +79,24 @@ function processRuleForDOM(dom, rule, media) {
 
     let {classList, skipped} = getTailwindClassesForRule(props);
 
-    for (let i=0;i<rule.nodes.length;i++) {
-        let decl = rule.nodes[i]
+    for(let decl of rule.nodes) {
+
         //handles comment nodes between css declarations
         if (decl.type !== 'decl') continue;
 
         if(!skipped.hasOwnProperty(decl.prop)){
-            // rule.nodes.splice(i,1);
-            decl.remove();
+            decl.markRemoval = true;
         }
-    }
-
-    if(rule.nodes.length===0){
-        rule.remove();
     }
 
     if (classList.length === 0) {
         return
     }
     // Remove . charecter from class
-    classList = classList.map((cl) => cl.slice(1));
+    classList = classList.map((cl) => {
+        cl = cl.slice(1);
+        return mediaPrefix ? mediaPrefix+':'+cl : cl;
+    });
 
     for (let el of elems) {
         //We dont want to remove old classes
@@ -89,6 +113,19 @@ function removeStyleLinks(dom){
     }
 }
 
+function removeNodesMarkedForRemoval(node){
+        if(node.hasOwnProperty('nodes')){
+            node.nodes.forEach(removeNodesMarkedForRemoval)
+            let toRemove = node.nodes.filter(n=>{
+                if(n.type === 'rule' || n.type ==='atrule'){
+                    return n.nodes.length === 0;
+                }
+                return n.markRemoval;
+            });
+            toRemove.forEach(n=>n.remove());
+        }
+}
+
 function tailwindify(html,css){
     const dom = htmlparser2.parseDocument(html);
     removeStyleLinks(dom);
@@ -99,7 +136,7 @@ function tailwindify(html,css){
 
     for (let node of cssom.nodes) {
         // dont do anything if this is not css rule node
-        if (node.type !== 'rule') {
+        if (node.type !== 'rule' && node.type!=='atrule') {
             continue;
         }
 
@@ -107,21 +144,26 @@ function tailwindify(html,css){
          * This method mutates both DOM and CSSOM. It will add classes to DOM
          * and will remove processed declarations from css rule
          */
-        processRuleForDOM(dom,node,{})
+        processRuleForDOM(dom,node,'')
 
 
     }
-    let elems = CSSselect.selectAll('head', dom, {});
 
+
+
+    let elems = CSSselect.selectAll('head', dom, {});
+    removeNodesMarkedForRemoval(cssom);
     let leftOverCss  = '';
         postcss.stringify(cssom,i=>{
             leftOverCss += i;
         });
-    leftOverCss = `    <style>
+    let StyleTag = `    <style>
     ${leftOverCss}
     </style>
 `
-    domUtils.appendChild(elems[0],htmlparser2.parseDocument(leftOverCss))
+    if(leftOverCss){
+        domUtils.appendChild(elems[0],htmlparser2.parseDocument(StyleTag))
+    }
     return render(dom);
 }
 
