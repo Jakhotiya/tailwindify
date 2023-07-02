@@ -11,3 +11,7 @@
     padding: 4px;
     display: flex;
 }
+
+.selector-does-not-exist-in-dom{
+    color:blue;
+}

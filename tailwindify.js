@@ -45,6 +45,15 @@ function getModifierFromMediaQuery(mediaRule){
  */
 function processRuleForDOM(dom, rule,mediaPrefix) {
 
+    /**
+     * Here we ignore all @ rules which are not media queries
+     * Other atrules like @page @key-frames are documented at
+     * https://developer.mozilla.org/en-US/docs/Web/CSS/At-rule
+     */
+    if(rule.type === 'atrule' && rule.name !== 'media'){
+        return;
+    }
+
     if(rule.type === 'atrule'){
         for(let innerRule of rule.nodes){
             let prefix = getModifierFromMediaQuery(rule);
@@ -58,12 +67,23 @@ function processRuleForDOM(dom, rule,mediaPrefix) {
      * them and add to the style tag in the body
      */
     let selector = rule.selector;
+    if(!rule.selector){
+        return;
+    }
     if (selector.includes(':')) {
         return
     }
 
-    let elems = CSSselect.selectAll(selector, dom, {});
+    let elems = [];
+    try{
+        elems = CSSselect.selectAll(selector, dom, {});
+    }catch (e){
+        console.error('Error occured while processing rule:',rule.selector);
+        return;
+    }
+
     if (elems.length === 0) {
+        rule.markRemoval = true;
         return
     }
 
@@ -118,7 +138,7 @@ function removeNodesMarkedForRemoval(node){
             node.nodes.forEach(removeNodesMarkedForRemoval)
             let toRemove = node.nodes.filter(n=>{
                 if(n.type === 'rule' || n.type ==='atrule'){
-                    return n.nodes.length === 0;
+                    return typeof n.nodes === 'undefined' || n.nodes.length === 0 || n.markRemoval;
                 }
                 return n.markRemoval;
             });
@@ -145,7 +165,6 @@ function tailwindify(html,css){
          * and will remove processed declarations from css rule
          */
         processRuleForDOM(dom,node,'')
-
 
     }
 

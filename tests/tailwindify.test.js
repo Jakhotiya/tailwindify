@@ -65,3 +65,11 @@ test('simple html files',()=>{
     expect(result).toBe(target);
 })
 
+test('if a no DOM node is found matching the selector, style node should be discarded from cssom',()=>{
+    let {source,css,target} = readSourceToTargetConversion('inline-html')
+    let result = tailwindify(source,css);
+    result = prettify(result);
+    target = prettify(target);
+    expect(result).toBe(target);
+})
+
